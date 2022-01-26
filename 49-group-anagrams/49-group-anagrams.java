@@ -1,58 +1,24 @@
 class Solution {
     public List<List<String>> groupAnagrams(String[] strs) {
-        int N = strs.length;
-        boolean[] isVisited = new boolean[N];
-        //HashMap<Character, Integer> map = new HashMap<>();
-        //System.out.println(this.helper(strs[0], strs[1]));
-        List<List<String>> listOfLists = new ArrayList<List<String>>();
-        for(int i = 0; i < N; i++) {
-            if( !isVisited[i] ) {
-                isVisited[i] = true;
-                List<String> al = new ArrayList<>();
-                al.add(strs[i]);
-                int j  = i + 1;
-                while( j < (N)) {
-                    if( !isVisited[j] ) {
-                        boolean bool = this.helper(strs[i], strs[j]); 
-                            if( bool ) {
-                                isVisited[j] = true;
-                                al.add(strs[j]);
-                            }
-                        }
-                    j++;
+        HashMap<String, List<String>> map = new HashMap<>();
+        boolean[] isVisited = new boolean[strs.length];
+        for(int i = 0; i < strs.length; i++) {
+            if( !isVisited[i]) {
+                char[] ch = strs[i].toCharArray();
+                Arrays.sort(ch);
+                String s1 = String.valueOf(ch);
+                if( map.containsKey(s1) ) {
+                    List<String> temp = map.get(s1);
+                    temp.add(strs[i]);
+                    map.replace(s1, temp);
+                } else {
+                    List<String> ls = new ArrayList<>();
+                    ls.add(strs[i]);
+                    map.put(s1,ls);
                 }
-                /* for(int j = i+1; j < N; j++) {
-                    if( !isVisited[j] ) {
-                        boolean bool = this.helper(strs[i], strs[j]); 
-                            if( bool ) {
-                                isVisited[j] = true;
-                                al.add(strs[j]);
-                            }
-                        }
-                    }*/
-                
-                listOfLists.add(al);
+                isVisited[i] = true;
             }
         }
-        return listOfLists;
-    }
-    
-    public boolean helper(String s1, String s2) {
-        if( s1.length() != s2.length()) {
-            return false;
-        }
-       if( s1.length() == 0 && s2.length() == 0) {
-            return true;
-        } 
-        char[] s11 = s1.toCharArray();
-        Arrays.sort(s11);
-        String t1 = new String(s11);
-        char[] s22 = s2.toCharArray();
-        Arrays.sort(s22);
-        String t2 = new String(s22);
-        if( t1.equals(t2)) {
-            return true;
-        }
-        return false;
+        return new ArrayList(map.values());
     }
 }
