@@ -14,24 +14,20 @@
  * }
  */
 class Solution {
-    ArrayList<Integer> list;
-    public boolean isValidBST(TreeNode root) {
-        list = new ArrayList<Integer>();
-        helper(root);
-        for(int i = 0; i < list.size()-1; i++) {
-            if( list.get(i) >= list.get(i+1)) {
-                return false;
-            }
+    public boolean validate(TreeNode root, Integer low, Integer high) {
+        // Empty trees are valid BSTs.
+        if (root == null) {
+            return true;
         }
-        return true;
+        // The current node's value must be between low and high.
+        if ((low != null && root.val <= low) || (high != null && root.val >= high)) {
+            return false;
+        }
+        // The left and right subtree must also be valid.
+        return validate(root.right, root.val, high) && validate(root.left, low, root.val);
     }
-    
-    public void helper( TreeNode node ) {
-        if( node == null ) {
-            return;
-        }
-        helper(node.left);
-        list.add(node.val);
-        helper(node.right);
+
+    public boolean isValidBST(TreeNode root) {
+        return validate(root, null, null);
     }
 }
