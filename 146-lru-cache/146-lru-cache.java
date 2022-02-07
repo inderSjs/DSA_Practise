@@ -1,46 +1,45 @@
 class LRUCache {
+    HashMap<Integer, Node> map;
+    int capacity;
+    int size;
+    Node head;
+    Node tail;
     
     class Node {
-        int key;
         int value;
+        int key;
         Node prev;
         Node next;
     }
-        
-        public void insert(Node node) {
-                        // Node root = new Node();
-                        // root.value = node.value;
-                        // root.key = node.key;
-            node.prev = head;
-            node.next = head.next;
-            head.next.prev = node;
-            head.next = node;
-        }
-        
-        public void removeNode(Node node) {
-            Node t1 = node.prev;
-            Node t2 = node.next;
-            t1.next = t2;
-            t2.prev = t1;
-        }
-        
-        public void moveToHead(Node node) {
-            removeNode(node);
-            insert(node);
-        }
-        
-        public Node removeTail() {
-            Node del = tail.prev;
-            removeNode(del);
-            return del;
-        }
     
+    public void addNode(Node node) {
+        Node temp = head.next;
+        head.next = node;
+        node.prev = head;
+        node.next = temp;
+        temp.prev = node;
+    }
     
-    HashMap<Integer, Node> map;
-    int size;
-    int capacity;
-    Node head;
-    Node tail;
+    public void evictNode(Node node) {
+        //always remove from the end
+        Node temp1 = node.prev;
+        Node temp2 = node.next;
+        temp1.next = temp2;
+        temp2.prev = temp1;
+    }
+    
+    public void moveToHead(Node node) {
+        evictNode(node);
+        addNode(node);
+    }
+    
+    public Node removeTail() {
+        Node temp = tail.prev;
+        evictNode(temp);
+        return temp;
+        //temp.next = tail;
+        //tail.prev = temp;
+    }
 
     public LRUCache(int capacity) {
         map = new HashMap<>();
@@ -54,9 +53,9 @@ class LRUCache {
     
     public int get(int key) {
         if( map.containsKey(key) ) {
-            Node root = map.get(key);
-            moveToHead(root);
-            return root.value;
+            Node node = map.get(key);
+            moveToHead(node);
+            return node.value;
         }
         return -1;
     }
@@ -67,7 +66,7 @@ class LRUCache {
             Node temp = new Node();
             temp.key = key;
             temp.value = value;
-            insert(temp);
+            addNode(temp);
             map.put(key, temp);
             size++;
             if( size > capacity ) {
