@@ -1,17 +1,16 @@
 class Solution {
-    int count;
     boolean[][] isVisited;
-    
+    int count;
     public int numIslands(char[][] grid) {
-        count = 0;
         int m = grid.length;
         int n = grid[0].length;
-        isVisited = new boolean[m][n];
+        count = 0;
+        isVisited = new boolean[m+1][n+1];
         for(int i = 0; i < m; i++) {
             for(int j = 0; j < n; j++) {
-                if( grid[i][j] == '1' && !isVisited[i][j]) {
+                if( !isVisited[i][j] && grid[i][j] == '1') {
+                    dfs(grid,i,j);
                     count++;
-                    dfs(grid, i, j);
                 }
             }
         }
@@ -20,20 +19,15 @@ class Solution {
     
     public void dfs(char[][] grid, int i, int j) {
         isVisited[i][j] = true;
-        int[] a = new int[]{1,-1};
-        int[] b = new int[]{-1,1};
-        for(int c = 0; c < 2; c++) {
-            if( (i + a[c]) >= 0 && (i + a[c]) < grid.length ) {
-                int aa = i + a[c];
-                if( grid[aa][j] == '1' && !isVisited[aa][j] ) {
-                    dfs(grid, aa, j);
-                }
+        int[] temp = new int[]{-1,1};
+        for(int k = 0; k < 2; k++) {
+            int x = i + temp[k];
+            if( x >= 0 && x < grid.length && !isVisited[x][j] && grid[x][j] == '1') {
+                dfs(grid,x,j);
             }
-            if( (j + b[c]) >= 0 && (j + b[c]) < grid[0].length ) {
-                int bb = j + b[c];
-                if( grid[i][bb] == '1' && !isVisited[i][bb] ) {
-                    dfs(grid, i, bb);
-                }
+            int y = j + temp[k];
+            if( y >= 0 && y < grid[0].length && !isVisited[i][y] && grid[i][y] == '1') {
+                dfs(grid,i,y);
             }
         }
     }
