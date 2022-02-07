@@ -9,6 +9,12 @@ class Solution {
                 list.getLast()[1] = Math.max(list.getLast()[1], interval[1]);
             }
         }
-        return list.toArray(new int[list.size()][]);
+        int[][] result = new int[list.size()][2];
+        int i = 0;
+        while( !list.isEmpty() ) {
+            result[i] = list.poll();
+            i++;
+        }
+        return result;
     }
 }
