@@ -26,33 +26,32 @@ class Solution{
     int[][] t;
     public int cutRod(int price[], int n) {
         //code here
-        int len = price.length;
         int[] length = new int[n];
-        for(int i = 0; i < len; i++) {
-            length[i] = i+1;
+        for(int i = 0; i < n; i++) {
+            length[i] = i + 1;
         }
-        t = new int[n+1][n];
+        t = new int[n+1][n+1];
         for(int i = 0; i <= n; i++) {
-            for(int j = 0; j < n; j++) {
-                t[i][j] = -500;
+            for(int j = 0; j <= n; j++) {
+                if( i == 0 ) {
+                    t[i][j] = 0;
+                }
+                if( j == 0 ) {
+                    t[i][j] = 0;
+                }
             }
         }
-        return maxProfit(price, length, n, n-1);
+        
+        for(int i = 1; i <= n; i++) {
+            for(int j = 1; j <= n; j++) {
+                if( length[i-1] <= j ) {
+                    t[i][j] = Math.max(price[i-1] + t[i][j-length[i-1]], t[i-1][j]);
+                } else {
+                    t[i][j] = t[i-1][j];
+                }
+            }
+        }
+        return t[n][n];
     }
     
-    public int maxProfit(int price[], int length[], int rod_length, int n) {
-        if( n < 0 || rod_length == 0 ) {
-            return 0;
-        }
-        if( t[rod_length][n] != -500 ) {
-            return t[rod_length][n];
-        }
-        if( length[n] <= rod_length ) {
-            t[rod_length][n] = Math.max( price[n] + maxProfit(price, length, rod_length - length[n], n), maxProfit(price, length, rod_length, n-1));
-            return t[rod_length][n];
-        } else {
-            t[rod_length][n] = maxProfit(price, length, rod_length, n-1);
-            return t[rod_length][n];
-        }
-    }
 }
