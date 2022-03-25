@@ -2,7 +2,7 @@ class Pair<U, V> {
     public U first;
     public V second;
     
-    public Pair(U first, V second) {
+    public Pair( U first, V second ) {
         this.first = first;
         this.second = second;
     }
@@ -12,34 +12,35 @@ class Bucket {
     private List<Pair<Integer, Integer>> bucket;
     
     public Bucket() {
-        this.bucket = new LinkedList<Pair<Integer, Integer>>();
+        bucket = new LinkedList<Pair<Integer, Integer>>();
     }
     
-    public Integer get(Integer key) {
-        for (Pair<Integer, Integer> pair: this.bucket) {
-            if(pair.first.equals(key)) {
+    public Integer get(int key) {
+        for(Pair<Integer, Integer> pair : this.bucket) {
+            if( pair.first.equals(key) ) {
                 return pair.second;
             }
         }
         return -1;
     }
     
-    public void update(Integer key, Integer value) {
+    public void update( int key, int value) {
         boolean bool = false;
-        for(Pair<Integer, Integer> pair: this.bucket) {
-            if( pair.first.equals(key) ) {
+        for(Pair<Integer, Integer> pair : this.bucket) {
+            if( pair.first.equals(key)) {
                 pair.second = value;
                 bool = true;
             }
         }
-        if (!bool) {
-            this.bucket.add(new Pair<Integer, Integer>(key, value));
+        if ( !bool ) {
+            Pair<Integer, Integer> pa = new Pair<Integer, Integer>( key, value);
+            this.bucket.add(pa);
         }
     }
     
-    public void remove( Integer key ) {
-        for (Pair<Integer, Integer> pair: this.bucket) {
-            if( pair.first.equals(key) ) {
+    public void remove(int key) {
+        for(Pair<Integer, Integer> pair: this.bucket) {
+            if( pair.first.equals(key)) {
                 this.bucket.remove(pair);
                 break;
             }
@@ -47,32 +48,32 @@ class Bucket {
     }
 }
 
+
 class MyHashMap {
-    public int key_space;
-    private List<Bucket> hash_table;
-    
+    private int keySpace;
+    private List<Bucket> map;
 
     public MyHashMap() {
-        this.key_space = 2069;
-        this.hash_table = new ArrayList<Bucket>();
-        for(int i = 0; i < this.key_space; i++) {
-            this.hash_table.add(new Bucket());
+        this.keySpace = 2069;
+        this.map = new ArrayList<Bucket>();
+        for(int i = 0; i < this.keySpace; i++) {
+            this.map.add(new Bucket());
         }
     }
     
     public void put(int key, int value) {
-        int hash_key = key % this.key_space;
-        this.hash_table.get(hash_key).update(key, value);
+        int index = key % this.keySpace;
+        this.map.get(index).update(key, value);
     }
     
     public int get(int key) {
-        int hash_key = key % this.key_space;
-        return this.hash_table.get(hash_key).get(key);
+        int index = key % this.keySpace;
+        return this.map.get(index).get(key);
     }
     
     public void remove(int key) {
-        int hash_key = key % this.key_space;
-        this.hash_table.get(hash_key).remove(key);
+        int index = key % this.keySpace;
+        this.map.get(index).remove(key);
     }
 }
 
