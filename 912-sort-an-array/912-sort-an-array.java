@@ -1,65 +1,45 @@
 class Solution {
     public int[] sortArray(int[] nums) {
-        sort(nums, 0, nums.length-1);
-        return nums;
-    }
-    
-    public void sort(int[] nums, int l, int r) {
-        if( l < r ) {
-            int mid = l + (r-l)/2;
-            sort(nums, l, mid);
-            sort(nums, mid+1, r);
-            merge(nums, l, mid, r);
-        }
-    }
-    
-    public void merge(int[] arr, int l, int m, int r) {
-        int n1 = m-l+1;
-        int n2 = r-m;
-        int[] L = new int[n1];
-        int[] R = new int[n2];
-        for(int i = 0; i < n1; i++) {
-            L[i] = arr[l+i];
-        }
-        for(int i = 0; i < n2; i++) {
-            R[i] = arr[m+1+i];
-        }
-        int i = 0;
-        int j = 0;
-        int k = l;
-        while( i < n1 && j < n2) {
-            if (L[i] < R[j]) {
-                arr[k] = L[i];
-                i++;
-            } else {
-                arr[k] = R[j];
-                j++;
-            }
-            k++;
-        }
-        while( i < n1 ) {
-            arr[k] = L[i];
-            k++;
-            i++;
-        }
-        while( j < n2 ) {
-            arr[k] = R[j];
-            k++;
+        int mid = nums.length/2;
+        int i = mid;
+        int j = mid;
+        while ( i >= 0 && j < nums.length ) {
+            swap(nums, i, j);
+            i--;
             j++;
         }
+        sort(nums, 0 , nums.length-1);
+        return nums;
     }
     
-/*    public int[] sortArray(int[] nums) {
-        int len = nums.length;
-        for(int i = 1; i < len; i++ ) {
-            int key = nums[i];
-            int j = i-1;
-            while( j >= 0 && key < nums[j]) {
-                nums[j+1] = nums[j];
-                j--;
-            }
-            nums[j+1] = key;
+    public void sort(int[] arr, int start, int end) {
+        if( start < end ) {
+            int pivot = partition(arr, start, end);
+            sort(arr, start, pivot-1);
+            sort(arr, pivot+1, end);
         }
-        return nums;
-    } */
+    }
+    
+    public int partition(int[] arr, int start, int end) {
+        int pivot = arr[end];
+        int i = start-1;
+        int j = start;
+        while( j < end ) {
+            if( arr[j] < pivot ) {
+                i++;
+                swap(arr, i, j);
+               // i++;
+               // j++;
+            }
+            j++;
+        }
+        swap(arr, i+1, end);
+        return (i+1);
+    }
+    
+    public void swap(int[] arr, int i ,int j) {
+        int temp = arr[i];
+        arr[i] = arr[j];
+        arr[j] = temp;
+    }
 }
