@@ -1,45 +1,53 @@
 class Solution {
     int[][] edges;
     int n;
-    boolean[] checked;
+    
     public boolean canFinish(int numCourses, int[][] prerequisites) {
         n = numCourses;
         edges = new int[n][n];
+        ArrayList<Integer> list = new ArrayList<>();
+        ArrayList<Integer> order = new ArrayList<>();
         for(int i = 0; i < prerequisites.length; i++) {
             int fv = prerequisites[i][1];
             int sv = prerequisites[i][0];
             edges[fv][sv] = 1;
         }
-        boolean[] isVisited = new boolean[n];
-        checked = new boolean[n];
         for(int i = 0; i < n; i++) {
-                if( isCyclic(i, isVisited)) {
+            if( helper(i) ) {
+                list.add(i);
+            }
+        }
+        if( list.size() == 0) {
+            return false;
+        }
+        while( !list.isEmpty() ) {
+            int v = list.remove(list.size()-1);
+            order.add(v);
+            for(int i = 0; i < n; i++) {
+                if( edges[v][i] == 1 ) {
+                    edges[v][i] = 0;
+                    if( helper(i) ) {
+                        list.add(i);
+                    }
+                }
+            }
+        }
+        for(int i = 0; i < n; i++) {
+            for(int j = 0; j < n; j++) {
+                if( edges[i][j] == 1) {
                     return false;
                 }
-            
+            }
         }
         return true;
     }
     
-    public boolean isCyclic(int vertex, boolean[] isVisited) {
-        if( checked[vertex]) {
-            return false;
-        }
-        if( isVisited[vertex] ) {
-            return true;
-        }
-        isVisited[vertex] = true;
-        boolean ret = false;
+    public boolean helper(int column) {
         for(int i = 0; i < n; i++) {
-            if( edges[vertex][i] == 1 ) {
-                ret = isCyclic(i, isVisited);
-                if( ret ) {
-                    break;
-                }
+            if( edges[i][column] == 1) {
+                return false;
             }
         }
-        isVisited[vertex] = false;
-        checked[vertex] = true;
-        return ret;
+        return true;
     }
 }
