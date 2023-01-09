@@ -13,7 +13,7 @@ class Solution {
                 }
             }
         }
-        dp[0][0] = a;
+        dp[0][0] = 0;
         for(int i = 1; i <= len; i++) {
             for(int j = 1; j <= amount; j++) {
                 if( coins[i-1] <= j ) {
