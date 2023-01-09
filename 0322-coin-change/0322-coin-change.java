@@ -1,38 +1,31 @@
 class Solution {
-    int[][] dp;
     public int coinChange(int[] coins, int amount) {
-        dp = new int[coins.length][amount+1];
-        for(int i = 0; i < coins.length; i++) {
+        int len = coins.length;
+        int[][] dp = new int[len+1][amount+1];
+        int a = Integer.MAX_VALUE-1;
+        for(int i = 0; i <= len; i++) {
             for(int j = 0; j <= amount; j++) {
-                dp[i][j] = -1;
+                if( i == 0) {
+                    dp[i][j] = a;
+                }
+                if( j == 0 ) {
+                    dp[i][j] = 0;
+                }
             }
         }
-        int temp = Integer.MAX_VALUE-1;
-        int a =  helper(coins, coins.length-1, amount);
-        if ( a == Integer.MAX_VALUE-1) {
+        dp[0][0] = a;
+        for(int i = 1; i <= len; i++) {
+            for(int j = 1; j <= amount; j++) {
+                if( coins[i-1] <= j ) {
+                    dp[i][j] = Math.min(1 + dp[i][j-coins[i-1]], dp[i-1][j]);
+                } else {
+                    dp[i][j] = dp[i-1][j];
+                }
+            }
+        }
+        if( dp[len][amount] == a ) {
             return -1;
-        } else {
-            return a;
         }
-    }
-    
-    public int helper(int[] coins, int index, int amount) {
-        if( amount == 0 ) {
-            return 0;
-        }
-        if( index < 0 || amount < 0 ) {
-            return Integer.MAX_VALUE-1;
-        }
-        if( dp[index][amount] != -1) {
-            return dp[index][amount];
-        }
-        if( coins[index] <= amount){
-            return dp[index][amount] = Math.min( 1 + helper(coins, index, amount - coins[index]), helper(coins, index-1, amount));
-        } else {
-            return dp[index][amount] = helper(coins, index-1, amount);
-        }
-        
-        
-        
+        return dp[len][amount];
     }
 }
