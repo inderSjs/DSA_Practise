@@ -1,44 +1,59 @@
 class MyStack {
     
-    static final int MAX = 1000; 
-    int top; 
-    int a[] = new int[MAX]; // Maximum size of Stack 
+    StackNode root; 
+  
+    static class StackNode { 
+        int data; 
+        StackNode next; 
+  
+        StackNode(int data) 
+        { 
+            //Constructor here
+            this.data = data;
+        } 
+    } 
 
     public MyStack() {
-        top = -1; //If stack is empty
+        
     }
     
     public void push(int x) {
-        if( top >= MAX ) {
-            System.out.println("Stack Overflow");
-            //return false;
-        } else {
-            top = top + 1;
-            a[top] = x;
+        StackNode node = new StackNode(x);
+        if( root == null ) {
+            root = node;
+            return;
         }
-        //return true;
+        StackNode temp = root;
+        node.next = temp;
+        root = node;
     }
     
     public int pop() {
-        if( top == -1 ) {
-            System.out.println("Stack Underflow");
-            return 0;
-        }
-        top = top - 1;
-        return a[top+1];
-    }
-    
-    public int top() {
-        if( top == -1 ) {
+        if( root == null ) {
             System.out.println("Stack Underflow");
             return 0;
         } else {
-            return a[top];
+            StackNode temp = root;
+            if( temp.next == null) {
+                root = null;
+                return temp.data;
+            }
+            root = temp.next;
+            return temp.data;
+        }
+    }
+    
+    public int top() {
+         if( root == null ) {
+            System.out.println("Stack Underflow");
+            return 0;
+        } else {
+            return root.data;
         }
     }
     
     public boolean empty() {
-        if( top == -1 ) {
+        if( root == null ) {
             return true;
         } else {
             return false;
