@@ -1,6 +1,5 @@
 class Solution {
     public boolean searchMatrix(int[][] matrix, int target) {
-        boolean check = false;
         int m = matrix.length;
         int n = matrix[0].length;
        // if( m == 1 && n == )
@@ -10,15 +9,11 @@ class Solution {
         int i = 0;
         while( i < m ) {
             if( target >= matrix[i][0] && target <= matrix[i][n-1]) {
-                check = true;
                 return binarySearch(matrix[i], 0, n-1, target);
             }
             i++;
         }
-        if( !check ) {
-            return false;
-        }
-        return true;
+        return false;
     }
     
     public boolean binarySearch(int[] arr, int l, int r, int target) {
