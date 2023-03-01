@@ -1,3 +1,14 @@
+// Time Complexity : Push, peek, empty -> O(1), pop -> O(1) ammortized
+// Space Complexity : O(n)
+// Did this code successfully run on Leetcode : Yes
+// Any problem you faced while coding this : I had to go through solutions to understand the approach
+
+
+// Your code here along with comments explaining your approach
+
+
+
+
 class MyQueue {
     private Stack<Integer> mainStack;
     private Stack<Integer> auxStack;
