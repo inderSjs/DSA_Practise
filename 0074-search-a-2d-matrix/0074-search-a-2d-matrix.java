@@ -1,3 +1,13 @@
+// Time Complexity : O(log(mn))
+// Space Complexity : O(1)
+// Did this code successfully run on Leetcode : Yes
+// Any problem you faced while coding this : I had to look at the approach for the opimized solution. I was able to code a solution which in avarage case, would cost O(logmn) but in worst case would be O(mn)
+
+
+// Your code here along with comments explaining your approach
+
+
+
 class Solution {
     public boolean searchMatrix(int[][] matrix, int target) {
         int m = matrix.length;
