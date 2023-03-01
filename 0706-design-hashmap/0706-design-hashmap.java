@@ -27,7 +27,6 @@ class MyHashMap {
         Node node = new Node( key, value );
         if( temp == null ) {
             map[hsh] = node;
-            node.next = null;
         } else {
             Node curr = map[hsh];
             Node t1 = map[hsh];
@@ -56,28 +55,35 @@ class MyHashMap {
     }
     
     public void remove(int key) {
-        int index = hash(key);
-        Node head = map[index];
-        if(head == null) return;
-        if(head.key == key) {
-            map[index] = head.next;
-            head.next = null;
+        int hsh = hash(key);
+        Node temp = map[hsh];
+        if( temp == null ) return;
+        if( temp.key == key ) {
+            map[hsh] = temp.next;
+            temp.next = null;
             return;
         }
-        Node prev = head;
-        Node curr = head.next;
-        while(curr != null) {
-            if(curr.key == key) {
-                prev.next = curr.next;
+        Node curr = map[hsh].next;
+        while( curr != null ) {
+            if( curr.key == key ) {
+                temp.next = curr.next;
                 curr.next = null;
                 return;
             }
-            prev = curr;
+            temp = curr;
             curr = curr.next;
+            //temp = temp.next;
         }
     }
 }
 
+/**
+ * Your MyHashMap object will be instantiated and called as such:
+ * MyHashMap obj = new MyHashMap();
+ * obj.put(key,value);
+ * int param_2 = obj.get(key);
+ * obj.remove(key);
+ */
 /**
  * Your MyHashMap object will be instantiated and called as such:
  * MyHashMap obj = new MyHashMap();
