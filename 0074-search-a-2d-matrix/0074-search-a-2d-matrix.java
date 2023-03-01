@@ -30,7 +30,7 @@ class Solution {
             }
         }
         if( l < r ) {
-            int mid = (l + (r-1))/2;
+            int mid = l + (r-l)/2;
             if( arr[mid] == target ) {
                 return true;
             } else if ( target < arr[mid] ) {
