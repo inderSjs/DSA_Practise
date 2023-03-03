@@ -1,9 +1,10 @@
 class Solution {
     public int[] searchRange(int[] nums, int target) {
+        //Brute Force O(n) solution
         int[] result = new int[]{-1,-1};
         int n = nums.length;
         if( n == 0 ) return result;
-        if( n == 1 && nums[0] == target ) return new int[]{0,0};
+        // if( n == 1 && nums[0] == target ) return new int[]{0,0};
         int low = 0;
         int high = low+1;
         while( low < n ) {
