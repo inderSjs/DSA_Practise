@@ -1,29 +1,56 @@
 class Solution {
-    public int[] searchRange(int[] nums, int target) {
-        //Brute Force O(n) solution
-        int[] result = new int[]{-1,-1};
-        int n = nums.length;
-        if( n == 0 ) return result;
-        // if( n == 1 && nums[0] == target ) return new int[]{0,0};
+    
+    public int findFirst(int[] arr, int target) {
         int low = 0;
-        int high = low+1;
-        while( low < n ) {
-            if( nums[low] == target ) {
-                result[0] = low;
-                if( high < n && nums[high] == target) {
-                    high++;
-                } else {
-                    result[1] = high-1;
-                    return result;
+        int high = arr.length-1;
+        while( low <= high ) {
+            int mid = low + (high-low)/2;
+            if( arr[mid] == target) {
+                if( mid == 0 || arr[mid-1] != target) {
+                    return mid;
                 }
+                if( arr[mid-1] == target ) {
+                    high = mid - 1;
+                }
+            } else if( arr[mid] < target ) {
+                low = mid + 1;
             } else {
-                low++;
-                high++;
+                high = mid - 1;
             }
         }
-        if( high == n && nums[n-1] == target) {
-            result[1] = n-1;
-        }
-        return result;
+        return -1;
     }
+    
+    public int findLast(int[] arr, int target) {
+        int low = 0;
+        int high = arr.length-1;
+        int n = high;
+        while( low <= high ) {
+            int mid = low + (high-low)/2;
+            if( arr[mid] == target) {
+                if( mid == n || arr[mid+1] != target) {
+                    return mid;
+                }
+                if( arr[mid+1] == target ) {
+                    low = mid + 1;
+                }
+            } else if( arr[mid] < target ) {
+                low = mid + 1;
+            } else {
+                high = mid - 1;
+            }
+        }
+        return -1;
+    }
+    
+    public int[] searchRange(int[] nums, int target) {
+        int[] result = new int[]{-1,-1};
+        if( nums.length == 0 ) {
+            return result;
+        }
+        int x = findFirst(nums, target);
+        int y = findLast(nums, target);
+        return new int[]{x,y};
+    }
+    
 }
