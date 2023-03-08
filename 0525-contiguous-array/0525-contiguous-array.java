@@ -1,3 +1,16 @@
+// Time Complexity : O(n) where n is the size of arr
+// Space Complexity : O(n)
+// Did this code successfully run on Leetcode : Yes
+// Any problem you faced while coding this : Yes, the intuition for the time
+// optimized solution was not clear
+
+
+// Your code here along with comments explaining your approach
+// Running Sum Pattern. Increment the sum if nums[i] = 1 decrement otherwise,
+// check if the running sum has been seen before using a HashMap
+
+
+
 class Solution {
     public int findMaxLength(int[] nums) {
         int n = nums.length;
