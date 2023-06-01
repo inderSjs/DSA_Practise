@@ -1,3 +1,6 @@
+// Time Complexity: O(n)
+// Space Complexity: O(H)
+
 /**
  * Definition for a binary tree node.
  * public class TreeNode {
@@ -36,3 +39,28 @@ class Solution {
         return result;
     }
 }
+// class Solution {
+//     int sum;
+//     public int sumNumbers(TreeNode root) {
+//         helper(root, 0);
+//         return sum;
+//     }
+    
+//     public void helper(TreeNode root, int currSum) {
+//         //base case
+//         currSum = currSum*10 + root.val;
+//         // System.out.println(root.val);
+//         // System.out.println(currSum);
+//         // System.out.println("xxxx");
+//         if( root.left == null && root.right == null ) {
+//             sum = sum + currSum;
+//             return;
+//         }
+//         if(root.left != null ) {
+//             helper(root.left, currSum*10 + root.val);
+//         }
+//         if( root.right != null ) {
+//             helper(root.right, currSum*10 + root.val);
+//         }
+//     }
+// }
