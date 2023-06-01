@@ -6,6 +6,9 @@ class Solution {
         for(int i = 0; i < matrix.length; i++) {
             if( target >= matrix[i][0] && target <= matrix[i][n-1] ) {
                 bool = binarySearch(matrix, i, target) || bool;
+                if( bool ) {
+                    return true;
+                }
             }
         }
         return bool;
