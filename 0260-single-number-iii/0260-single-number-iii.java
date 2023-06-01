@@ -1,3 +1,6 @@
+// Time: O(n)
+// Space: O(1)
+
 class Solution {
     public int[] singleNumber(int[] nums) {
         int mask1 = 0;
