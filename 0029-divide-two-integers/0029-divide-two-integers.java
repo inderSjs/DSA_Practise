@@ -1,3 +1,6 @@
+// Time Complexity: O(n) where n is the absolute power of the dividend
+// Space Complexity: O(1)
+
 class Solution {
     public int divide(int dividend, int divisor) {
         if( divisor == 0 ) {
