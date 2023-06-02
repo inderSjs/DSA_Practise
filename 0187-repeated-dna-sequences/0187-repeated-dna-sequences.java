@@ -1,3 +1,6 @@
+// Time Complexity: O(n)
+// Space complexity: O(n)
+
 class Solution {
     public List<String> findRepeatedDnaSequences(String s) {
         int n = s.length();
