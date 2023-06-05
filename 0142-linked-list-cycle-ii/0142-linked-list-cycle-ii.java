@@ -14,17 +14,25 @@ public class Solution {
         if( head == null ) {
             return head;
         }
-        HashSet<ListNode> set = new HashSet<>();
-        ListNode temp = head;
-        // ListNode prev = null;
-        while( temp != null ) {
-            if( set.contains(temp) ) {
-                // System.out.println(prev.val);
-                return temp;
+        boolean flag = false;
+        ListNode slow = head;
+        ListNode fast = head;
+        while( fast != null && fast.next != null ) {
+            slow = slow.next;
+            fast = fast.next.next;
+            if( slow == fast ) {
+                flag = true;
+                break;
             }
-            set.add(temp);
-            temp = temp.next;
         }
-        return null;
+        if( !flag ) {
+            return null;
+        }
+        fast = head;
+        while( slow != fast ) {
+            slow = slow.next;
+            fast = fast.next;
+        }
+        return slow;
     }
 }
