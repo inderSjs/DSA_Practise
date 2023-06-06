@@ -1,3 +1,6 @@
+// Time Complexity: O(n)
+// Space Complexity: o(n)
+
 /**
  * Definition for a binary tree node.
  * public class TreeNode {
