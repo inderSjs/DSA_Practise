@@ -1,4 +1,4 @@
-<h2><a href="https://leetcode.com/problems/robot-bounded-in-circle/">1041. Robot Bounded In Circle</a></h2><h3>Medium</h3><hr><div><p>On an infinite plane, a robot initially stands at <code>(0, 0)</code> and faces north. Note that:</p>
+<h2><a href="https://leetcode.com/problems/robot-bounded-in-circle/solution/">1041. Robot Bounded In Circle</a></h2><h3>Medium</h3><hr><div><p>On an infinite plane, a robot initially stands at <code>(0, 0)</code> and faces north. Note that:</p>
 
 <ul>
 	<li>The <strong>north direction</strong> is the positive direction of the y-axis.</li>
