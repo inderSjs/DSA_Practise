@@ -1,3 +1,6 @@
+// Time Complexity: O(N) where N is the number of nodes in the tree
+// Space Complexity: O(H) where H is the height of the tree
+
 /**
  * Definition for a binary tree node.
  * public class TreeNode {
@@ -29,11 +32,7 @@ class Solution {
         if( result.size() == level) {
             result.add(root.val);
         }
-        if( result.size() >= level ) {
-            result.set(level, root.val);
-        }
-        
-        helper(root.left, level+1);
         helper(root.right, level+1);
+        helper(root.left, level+1);
     }
 }
