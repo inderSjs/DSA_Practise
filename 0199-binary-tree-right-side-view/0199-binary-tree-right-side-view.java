@@ -25,12 +25,15 @@ class Solution {
         //base case
         if(root == null) {
             return;
-        }
-        
+        }        
         if( result.size() == level) {
             result.add(root.val);
         }
-        helper(root.right, level+1);
+        if( result.size() >= level ) {
+            result.set(level, root.val);
+        }
+        
         helper(root.left, level+1);
+        helper(root.right, level+1);
     }
 }
