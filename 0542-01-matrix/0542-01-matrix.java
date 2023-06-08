@@ -1,3 +1,7 @@
+// Time Complexity: O(mn)
+// Space Complexity: O(mn)
+
+
 class Solution {
     public int[][] updateMatrix(int[][] mat) {
         int m = mat.length;
