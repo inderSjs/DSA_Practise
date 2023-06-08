@@ -14,47 +14,30 @@
  * }
  */
 class Solution {
-    HashMap<TreeNode, Integer> map;
-    boolean bool;
+    int depthX;
+    int depthY;
+    TreeNode parentX;
+    TreeNode parentY;
     public boolean isCousins(TreeNode root, int x, int y) {
-        this.map = new HashMap<>();
-        dfs(root, x, 0);
-        bool = false;
-        dfs(root, y, 0);
-        if( map.size() < 2 ) {
-            return false;
-        }
-        List<Integer> temp = new ArrayList<>();
-        for(TreeNode node: map.keySet() ) {
-            temp.add(map.get(node));
-        }
-        return temp.get(0) == temp.get(1);
+        dfs(root, null, 0, x, y);
+        return ( parentX != parentY && depthX == depthY);
     }
     
-    private void dfs(TreeNode root, int value, int level) {
+    private void dfs( TreeNode root, TreeNode parent, int depth, int x, int y) {
         //base case
         if( root == null ) {
             return;
         }
         
-        if(root.left != null && root.left.val == value) {
-            map.put(root, level+1);
-            bool = true;
-            return;
+        if( root.val == x ) {
+            depthX = depth;
+            parentX = parent;
         }
-        if(root.right != null && root.right.val == value) {
-            map.put(root, level+1);
-            bool = true;
-            return;
+        if( root.val == y ) {
+            depthY = depth;
+            parentY = parent;
         }
-        if( !bool ) {
-            dfs(root.left, value, level+1);
-        }
-        if( !bool ) {
-            dfs(root.right, value, level+1);
-        }
-        
-        // dfs(root.right, value, level+1);
-       
+        dfs(root.left, root, depth+1, x, y);
+        dfs(root.right, root, depth+1, x, y);
     }
 }
