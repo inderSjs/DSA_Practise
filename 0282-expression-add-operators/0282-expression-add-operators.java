@@ -1,3 +1,6 @@
+//Time Complexity: O(4^n)
+//Space complexity: O(n)
+
 class Solution {
     List<String> result;
     public List<String> addOperators(String num, int target) {
