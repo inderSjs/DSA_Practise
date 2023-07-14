@@ -6,17 +6,16 @@ class Solution {
         return result;
     }
     
-    private void helper(int[] nums, int index, List<Integer> list) {
+    private void helper(int[] nums, int pivot, List<Integer> list) {
         //base case
-        if(index == nums.length) {
-            result.add(new ArrayList<>(list));
-            return;
-        }
+        result.add(new ArrayList<>(list));
         
-        //dont include
-        helper(nums, index+1, list);
-        list.add(nums[index]);
-        helper(nums, index+1, list);
-        list.remove(list.size()-1);
+        //logic
+        for(int i = pivot; i < nums.length; i++) {
+            //action
+            list.add(nums[i]);
+            helper(nums, i+1, list);
+            list.remove(list.size()-1);
+        }
     }
 }
