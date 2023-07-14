@@ -1,22 +1,12 @@
+// Time Complexity: O(n x 2 ^n) where n is the length of the string
+// Space Complexity: O(n)
+
 class Solution {
     List<List<String>> temp;
     public List<List<String>> partition(String s) {
         temp = new ArrayList<>();
         helper(s, 0, new ArrayList<>());
         return temp;
-        // List<List<String>> result = new ArrayList<>();
-        // for(int i = 0; i < temp.size(); i++) {
-        //     boolean bool = true;
-        //     for(int j = 0; j < temp.get(i).size(); j++) {
-        //         if( !isPalindrome(temp.get(i).get(j))) {
-        //             bool = false;
-        //         }
-        //     }
-        //     if( bool ) {
-        //         result.add(temp.get(i));
-        //     }
-        // }
-        // return result;
     }
     
     private void helper(String s, int pivot, List<String> list) {
