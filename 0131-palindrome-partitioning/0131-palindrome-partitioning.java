@@ -3,19 +3,20 @@ class Solution {
     public List<List<String>> partition(String s) {
         temp = new ArrayList<>();
         helper(s, 0, new ArrayList<>());
-        List<List<String>> result = new ArrayList<>();
-        for(int i = 0; i < temp.size(); i++) {
-            boolean bool = true;
-            for(int j = 0; j < temp.get(i).size(); j++) {
-                if( !isPalindrome(temp.get(i).get(j))) {
-                    bool = false;
-                }
-            }
-            if( bool ) {
-                result.add(temp.get(i));
-            }
-        }
-        return result;
+        return temp;
+        // List<List<String>> result = new ArrayList<>();
+        // for(int i = 0; i < temp.size(); i++) {
+        //     boolean bool = true;
+        //     for(int j = 0; j < temp.get(i).size(); j++) {
+        //         if( !isPalindrome(temp.get(i).get(j))) {
+        //             bool = false;
+        //         }
+        //     }
+        //     if( bool ) {
+        //         result.add(temp.get(i));
+        //     }
+        // }
+        // return result;
     }
     
     private void helper(String s, int pivot, List<String> list) {
@@ -28,9 +29,12 @@ class Solution {
         //logic
         for(int i = pivot; i < s.length(); i++) {
             String sub = s.substring(pivot, i+1);
-            list.add(sub);
-            helper(s, i+1, list);
-            list.remove(list.size()-1);
+            if( isPalindrome(sub)) {
+                list.add(sub);
+                helper(s, i+1, list);
+                list.remove(list.size()-1);
+            }
+            
         }
     }
     
