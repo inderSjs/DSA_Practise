@@ -1,26 +1,27 @@
 class Solution {
     public List<Integer> findClosestElements(int[] arr, int k, int x) {
-        List<List<Integer>> list = new ArrayList<>();
+        HashMap<Integer, Integer> map = new HashMap<>();
         for(int i = 0; i < arr.length; i++) {
-            int a = Math.abs(x - arr[i]);
-            List<Integer> temp = new ArrayList<>();
-            temp.add(a);
-            temp.add(arr[i]);
-            list.add(temp);
-            // nums[i][1] = i;nums[i][0] = a;
-            
+            int dist = Math.abs(x-arr[i]);
+            map.put(i, dist);
         }
-        Collections.sort(list, new Comparator<List<Integer>>() {
-            public int compare(List<Integer> a1, List<Integer> a2) {
-                if( a1.get(0) == a2.get(0) ) {
-                    return a1.get(1)-a2.get(1);
-                }
-                return a1.get(0) - a2.get(0);
+        PriorityQueue<Integer> pq = new PriorityQueue<>((a,b) -> {
+            int distA = map.get(a);
+            int distB = map.get(b);
+            if( distA == distB ) {
+                return b-a;
             }
+            return distB-distA;
         });
+        for(int i = 0; i < arr.length; i++) {
+            pq.add(i);
+            if( pq.size() > k ) {
+                pq.poll();
+            }
+        }
         List<Integer> result = new ArrayList<>();
-        for(int i = 0; i < k; i++) {
-            result.add(list.get(i).get(1));
+        while( !pq.isEmpty() ) {
+            result.add(arr[pq.poll()]);
         }
         Collections.sort(result);
         return result;
