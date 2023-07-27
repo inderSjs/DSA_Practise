@@ -1,3 +1,6 @@
+//Time Complexity: O(n)
+//Space Complexity: O(n)
+
 class Solution {
     public double myPow(double x, int n) {
         //base case
