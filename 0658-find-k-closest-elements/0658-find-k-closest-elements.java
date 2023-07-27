@@ -1,21 +1,19 @@
 class Solution {
     public List<Integer> findClosestElements(int[] arr, int k, int x) {
-        //2 pointer solution
-        int start = 0;
-        int end = arr.length-1;
         List<Integer> result = new ArrayList<>();
-        while( (end-start+1) > k ) {
-            int distA = Math.abs(x - arr[start]);
-            int distB = Math.abs(x - arr[end]);
-            if( distA == distB ) {
-                end--;
-            } else if ( distA > distB ) {
-                start++;
+        int low = 0;
+        int high = arr.length - k;
+        while( low < high ) {
+            int mid = low + (high - low)/2;
+            int distS = x - arr[mid];
+            int distE = arr[mid+k] - x;
+            if( distS > distE ) {
+                low = mid + 1;
             } else {
-                end--;
+                high = mid;
             }
         }
-        for(int i = start; i <= end; i++) {
+        for(int i = low; i < low + k; i++) {
             result.add(arr[i]);
         }
         return result;
