@@ -1,3 +1,6 @@
+// Time Complexity: O(log(n-k))
+// Space Complexity: O(1)
+
 class Solution {
     public List<Integer> findClosestElements(int[] arr, int k, int x) {
         int low = 0;
