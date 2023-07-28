@@ -1,3 +1,6 @@
+// Time Complexity: O(n!)
+// Space Complexity: O(n^2)
+
 class Solution {
     List<List<String>> result;
     public List<List<String>> solveNQueens(int n) {
