@@ -38,15 +38,9 @@ class Solution {
     
     private boolean isSafe(boolean[][] grid, int i, int j) {
         int n = grid.length;
-        //row check
-        for(int r = 0; r < n; r++) {
-            if( r != i && grid[r][j] ) {
-                return false;
-            }
-        }
         //column check
-        for(int c = 0; c < n; c++) {
-            if( c != j && grid[i][c] ) {
+        for(int r = 0; r < i; r++) {
+            if( grid[r][j] ) {
                 return false;
             }
         }
@@ -62,28 +56,10 @@ class Solution {
         }
         x = i;
         y = j;
-        while( x >= n && y >= n) {
-            x = x+1;
-            y = y+1;
-            if( x >= n && y >= n && grid[x][y] ) {
-                return false;
-            }
-        }
-        x = i;
-        y = j;
         while( x >= 0 && y < n) {
             x = x-1;
             y = y+1;
             if(x >= 0 && y < n && grid[x][y] ) {
-                return false;
-            }
-        }
-        x = i;
-        y = j;
-        while( x < n && y >= 0 ) {
-            x = x+1;
-            y = y-1;
-            if( x < n && y >= 0 && grid[x][y] ) {
                 return false;
             }
         }
