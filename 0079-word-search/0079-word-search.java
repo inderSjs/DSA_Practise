@@ -1,3 +1,7 @@
+// Time Complexity: O(mxnx3^L) where L is the length of the word
+// Space Complexity: O(L) recursive call stack
+
+
 class Solution {
     private int[][] dirs;
     private int m;
