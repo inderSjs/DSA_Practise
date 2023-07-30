@@ -1,40 +1,37 @@
-// Time Complexity : O(mn) where m is length of coins and n is the amount
-// Space Complexity : O(mn)
-// Did this code successfully run on Leetcode : Yes
-// Any problem you faced while coding this : NO
-
-
-// Your code here along with comments explaining your approach
-
-
 class Solution {
+    int[][] memo;
     public int coinChange(int[] coins, int amount) {
-        int[][] dp = new int[coins.length+1][amount+1];
-        int a = Integer.MAX_VALUE-1;
-        for(int i = 0; i <= coins.length; i++) {
+        this.memo = new int[coins.length][amount+1];
+        for(int i = 0; i < coins.length; i++) {
             for(int j = 0; j <= amount; j++) {
-                if( j == 0) {
-                    dp[i][j] = 0;
-                }
-                if( i == 0 ) {
-                    dp[i][j] = a;
-                }
+                memo[i][j] = -1;
             }
         }
-        dp[0][0] = 0;
-        for(int i = 1; i <= coins.length; i++) {
-            for(int j = 1; j <= amount; j++) {
-                if( j >= coins[i-1]) {
-                    dp[i][j] = Math.min(1 + dp[i][j-coins[i-1]], dp[i-1][j]);
-                } else {
-                    dp[i][j] = dp[i-1][j];
-                }
-            }
-        }
-        if( dp[coins.length][amount] >= a) {
+        int result =  helper(coins, amount, coins.length-1);
+        if( result == Integer.MAX_VALUE-1) {
             return -1;
+        }
+        return result;
+    }
+    
+    private int helper(int[] coins, int amount, int idx) {
+        //base case
+        if( amount == 0 ) {
+            return 0;
+        }
+        
+        if( amount < 0 || idx < 0) {
+            return Integer.MAX_VALUE-1;
+        }
+        if( memo[idx][amount] != -1) {
+            return memo[idx][amount];
+        }
+        if( amount >= coins[idx] ) {
+            memo[idx][amount] = Math.min( 1 + helper(coins, amount-coins[idx], idx), helper(coins, amount, idx-1));
+            return memo[idx][amount];
         } else {
-            return dp[coins.length][amount];
+            memo[idx][amount] = helper(coins, amount, idx-1);
+            return memo[idx][amount];
         }
     }
 }
