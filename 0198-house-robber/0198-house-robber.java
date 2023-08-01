@@ -1,3 +1,7 @@
+// Time Complexity: O(n)
+// Space Complexity: O(1)
+
+
 class Solution {
     public int rob(int[] nums) {
         int prev = 0;
