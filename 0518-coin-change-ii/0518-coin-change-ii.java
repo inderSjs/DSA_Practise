@@ -1,27 +1,28 @@
-// Time Complexity : O(n x amount)
-// Space Complexity :O(amount)
-// Did this code successfully run on Leetcode : Yes
-// Any problem you faced while coding this : No
-
-
-// Your code here along with comments explaining your approach
-
-
 class Solution {
+    // private int result;
+    private int memo[][];
     public int change(int amount, int[] coins) {
-        int m = coins.length;
-        int[] dp = new int[amount+1];
-        for(int i = 0; i <= amount; i++) {
-            dp[i] = 0;
-        }
-        dp[0] = 1;
-        for(int i = 1; i <= m; i++) {
-            for(int j = 1; j <= amount; j++) {
-                if( j >= coins[i-1] ) {
-                    dp[j] = dp[j-coins[i-1]] + dp[j];
-                }
+        this.memo = new int[coins.length][amount+1];
+        for(int i = 0; i < coins.length; i++) {
+            for(int j = 0; j <= amount; j++) {
+                memo[i][j] = -1;
             }
         }
-        return dp[amount];
+        return helper(coins, amount, 0);
+        // return result;
+    }
+    
+    private int helper(int[] coins, int amount, int index) {
+        if( amount < 0 || index >= coins.length) {
+            return 0;
+        }
+        if( amount == 0) {
+            return 1;
+        }
+        if( memo[index][amount] != -1) {
+            return memo[index][amount];
+        }
+        memo[index][amount] = helper(coins, amount, index+1) + helper(coins, amount-coins[index], index);
+        return memo[index][amount];
     }
 }
