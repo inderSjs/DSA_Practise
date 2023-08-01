@@ -1,3 +1,7 @@
+// Time Complexity: O(mn) where m is coins length and n is the amount
+// Space Complexity: O(mn)
+
+
 class Solution {
     public int change(int amount, int[] coins) {
         int[][] dp = new int[coins.length+1][amount+1];
