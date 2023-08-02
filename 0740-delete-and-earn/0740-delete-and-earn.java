@@ -1,5 +1,4 @@
 class Solution {
-    private int[] memo;
     
     public int deleteAndEarn(int[] nums) {
         int max = Integer.MIN_VALUE;
@@ -10,22 +9,12 @@ class Solution {
         for(int num: nums) {
             arr[num] = arr[num] + num;
         }
-        this.memo = new int[max+100];
-        Arrays.fill(memo, -1);
-        return helper(arr, 0, 0);
+        int[] dp = new int[max+1];
+        dp[0] = arr[0];
+        dp[1] = Math.max( arr[1], dp[0]);
+        for(int i = 2; i <= max; i++) {
+            dp[i] = Math.max(dp[i-1], arr[i] + dp[i-2]);
+        }
+        return dp[max];
     }
-    
-    private int helper(int[] arr, int idx, int amount) {
-        if( idx >= arr.length ) {
-            return amount;
-        }
-        if( memo[idx] != -1) {
-            return amount + memo[idx];
-        }
-        int case1 = helper(arr, idx+1, amount);
-        int case2 = helper(arr, idx+2, amount + arr[idx]);
-        int ans = Math.max(case1, case2);
-        memo[idx] = ans;
-        return ans;
-    } 
 }
