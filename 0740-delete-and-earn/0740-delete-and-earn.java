@@ -1,3 +1,7 @@
+// Time Complexity: O(max(n)) where n is the maximum value in nums
+// Space Complexity: O(max(n))
+
+
 class Solution {
     
     public int deleteAndEarn(int[] nums) {
