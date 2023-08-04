@@ -10,7 +10,11 @@ class Solution {
             
         });
         int n = intervals.length;
-        PriorityQueue<Integer> pq = new PriorityQueue<>( (a, b) -> a-b);
+        PriorityQueue<Integer> pq = new PriorityQueue<>( new Comparator<Integer>() {
+            public int compare(Integer a, Integer b) {
+                return a - b;
+            }
+        });
         pq.add(intervals[0][1]);
         for(int i = 1; i < n; i++) {
             int start = intervals[i][0];
