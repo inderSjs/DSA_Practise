@@ -1,3 +1,7 @@
+// Time Complexity: O(mn)
+// Space Complexity: O(1)
+
+
 class Solution {
     public int[] findDiagonalOrder(int[][] mat) {
         int m = mat.length;
