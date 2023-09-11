@@ -1,30 +1,44 @@
 class Solution {
     public int[] intersect(int[] nums1, int[] nums2) {
-        List<Integer> result = new ArrayList<>();
-        HashMap<Integer, Integer> map = new HashMap<>();
-        for(int num: nums1) {
-            if( map.containsKey(num) ) {
-                int x = map.get(num);
-                map.put(num, x+1);
-            } else {
-                map.put(num, 1);
+        int m = nums1.length;
+        int n = nums2.length;
+        if( m > n ) {
+            return intersect(nums2, nums1);
+        }
+        Arrays.sort(nums1);
+        Arrays.sort(nums2);
+        int low = 0;
+        int high = n-1;
+        List<Integer> li = new ArrayList<>();
+        for(int i = 0; i < m; i++) {
+            int bsidx = binarySearch(nums2, low, high, nums1[i]);
+            if( bsidx != -1) {
+                li.add(nums1[i]);
+                low = bsidx + 1;
             }
         }
-        for(int num: nums2) {
-            if( map.containsKey(num) ) {
-                result.add(num);
-                int temp = map.get(num);
-                if( temp == 1 ) {
-                    map.remove(num);
+        int[] result = new int[li.size()];
+        for(int i = 0; i < li.size(); i++) {
+            result[i] = li.get(i);
+        }
+        return result;
+    }
+    
+    private int binarySearch(int[] arr, int low, int high, int target) {
+        while( low <= high ) {
+            int mid = low + (high-low)/2;
+            if( arr[mid] == target ) {
+                if( mid > low && arr[mid] == arr[mid-1] ) {
+                    high = mid-1;
                 } else {
-                    map.put(num, temp-1);
+                    return mid;
                 }
+            } else if ( arr[mid] > target) {
+                high = mid-1;
+            } else {
+                low = mid + 1;
             }
         }
-        int[] re = new int[result.size()];
-        for(int i = 0; i < result.size(); i++) {
-            re[i] = result.get(i);
-        }
-        return re;
+        return -1;
     }
 }
