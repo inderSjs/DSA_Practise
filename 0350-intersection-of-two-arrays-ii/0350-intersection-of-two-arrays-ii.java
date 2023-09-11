@@ -1,3 +1,6 @@
+// Time Complexity: O(mlgn)
+// Space Complexity: O(1)
+
 class Solution {
     public int[] intersect(int[] nums1, int[] nums2) {
         int m = nums1.length;
