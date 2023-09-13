@@ -1,3 +1,7 @@
+// Time Complexity: O(2n) = O(n)
+// Space Complexity: O(n)
+
+
 class Solution {
     public int[] dailyTemperatures(int[] temperatures) {
         int n = temperatures.length;
