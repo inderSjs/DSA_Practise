@@ -6,9 +6,13 @@ class Solution {
             return -1;
         }
         for(int i = 0; i <= hl-nl; i++) {
-            String temp = haystack.substring(i, i+nl);
-            if( temp.equals(needle)) {
-                return i;
+            for(int j = 0; j < nl; j++) {
+                if( needle.charAt(j) != haystack.charAt(i+j)) {
+                    break;
+                }
+                if( j == nl-1) {
+                    return i;
+                }
             }
         }
         return -1;
