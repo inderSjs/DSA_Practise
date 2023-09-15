@@ -1,3 +1,7 @@
+// Time Complexity: O(m) + O(n)
+// Space Complexity: O(n)
+
+
 class Solution {
     public List<Integer> findAnagrams(String s, String p) {
         List<Integer> result = new ArrayList<>();
