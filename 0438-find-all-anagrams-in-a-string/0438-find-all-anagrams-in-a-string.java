@@ -1,22 +1,51 @@
 class Solution {
     public List<Integer> findAnagrams(String s, String p) {
         List<Integer> result = new ArrayList<>();
-        char[] arr = p.toCharArray();
-        Arrays.sort(arr);
-        String pn = new String(arr);
-        int l = s.length();
-        int n = p.length();
-        if( n > l) {
-            return result;
-        }
-        for(int i = 0; i <= l-n; i++) {
-            String temp = s.substring(i, i+n);
-            char[] ar = temp.toCharArray();
-            Arrays.sort(ar);
-            String sn = new String(ar);
-            if( pn.equals(sn)) {
-                result.add(i);
+        int sl = s.length();
+        int pl = p.length();
+        HashMap<Character, Integer> map = new HashMap<>();
+        for(int i = 0; i < pl; i++) {
+            char c = p.charAt(i);
+            if( !map.containsKey(c) ) {
+                map.put(c, 0);
             }
+            int cnt = map.get(c);
+            map.put(c, cnt+1);
+        }
+        int match = 0;
+        int i = 0;
+        int j = 0;
+        while( j < sl) {
+            // in
+            char in = s.charAt(j);
+            if( map.containsKey(in) ) {
+                int cnt = map.get(in);
+                cnt--;
+                map.put(in, cnt);
+                if(cnt == 0) {
+                    match++;
+                }
+            }
+            // out
+            if( (j-i) == pl) {
+                char out = s.charAt(i);
+                if( map.containsKey(out)) {
+                    int cnt = map.get(out);
+                    cnt++;
+                    map.put(out, cnt);
+                    if( cnt == 1) {
+                        match--;
+                    }
+                }
+                
+                j++;
+                i++;
+            } else {
+                j++;
+            }
+            if( match == map.size()) {
+                    result.add(i);
+                }
         }
         return result;
     }
