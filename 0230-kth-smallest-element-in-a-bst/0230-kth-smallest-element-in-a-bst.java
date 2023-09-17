@@ -14,19 +14,23 @@
  * }
  */
 class Solution {
-    List<Integer> list;
+    int K;
+    int result;
     public int kthSmallest(TreeNode root, int k) {
-        list = new ArrayList<>();
-        helper(root);
-        return list.get(k-1);
+        helper(root, k);
+        return result;
     }
     
-    private void helper(TreeNode root) {
+    private void helper(TreeNode root, int k) {
         if(root == null) {
             return;
         }
-        helper(root.left);
-        list.add(root.val);
-        helper(root.right);
+        helper(root.left, k);
+        K++;
+        if( K == k) {
+            result = root.val;
+            return;
+        }
+        helper(root.right, k);
     }
 }
