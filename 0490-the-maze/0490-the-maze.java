@@ -1,3 +1,7 @@
+// Time Complexity: O(mn(m+n))
+// Space Complexity: O(mn)
+
+
 class Solution {
     public boolean hasPath(int[][] maze, int[] start, int[] destination) {
         if( start[0] == destination[0] && start[1] == destination[1] ) {
