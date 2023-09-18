@@ -1,3 +1,7 @@
+// Time Complexity: O(V+E)
+// Space Complexity: O(V)
+
+
 class Solution {
     public int findJudge(int n, int[][] trust) {
         int[] degree = new int[n];
