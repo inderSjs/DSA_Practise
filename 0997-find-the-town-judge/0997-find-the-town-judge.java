@@ -1,28 +1,13 @@
 class Solution {
     public int findJudge(int n, int[][] trust) {
-        HashMap<Integer, HashSet<Integer>> map = new HashMap<>();
-        for(int i = 1; i <= n; i++) {
-            map.put(i, new HashSet<>());
-        }
+        int[] degree = new int[n];
         for(int[] e: trust) {
-            int a = e[0];
-            int b = e[1];
-            map.get(a).add(b);
+            degree[e[0]-1]--;
+            degree[e[1]-1]++;
         }
-        boolean flag = true;
-        for(int i = 1; i <= n; i++) {
-            if( map.get(i).size() == 0) {
-                flag = true;
-                for(int j = 1; j <= n; j++) {
-                    if( i != j ) {
-                        if( !map.get(j).contains(i) ) {
-                            flag = false;
-                        }
-                    }
-                }
-                if( flag ) {
-                    return i;
-                }
+        for(int i = 0; i < degree.length; i++) {
+            if( degree[i] == (n-1)) {
+                return (i+1);
             }
         }
         return -1;
