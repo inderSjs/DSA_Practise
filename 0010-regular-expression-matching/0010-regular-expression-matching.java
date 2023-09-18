@@ -1,3 +1,7 @@
+// Time Complexity: O(mn)
+// Space Complexity: O(mn)
+
+
 class Solution {
     public boolean isMatch(String s, String p) {
         if( p.equals(".*") ) {
