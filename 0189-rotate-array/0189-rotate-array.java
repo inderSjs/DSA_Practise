@@ -1,3 +1,6 @@
+// Time Complexity: O(n)
+// Space Complexity: O(1)
+
 class Solution {
     public void rotate(int[] nums, int k) {
         int n = nums.length;
