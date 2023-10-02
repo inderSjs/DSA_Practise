@@ -1,3 +1,6 @@
+// Time Complexity: O(n)
+// Space Complexity: O(n)
+
 class Solution {
     public int[] exclusiveTime(int n, List<String> logs) {
         int[] result = new int[n];
