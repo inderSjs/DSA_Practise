@@ -1,3 +1,7 @@
+// Time Complexity: O(n)
+// Space Complexity: O(1)
+
+
 class Solution {
     public boolean canJump(int[] nums) {
         int target = nums.length-1;
