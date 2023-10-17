@@ -1,15 +1,26 @@
-// Time Complexity: O(n)
-// Space Complexity: O(1)
-
-
 class Solution {
     public boolean canJump(int[] nums) {
-        int target = nums.length-1;
-        for(int i = nums.length-2; i >= 0; i--) {
-            if( i + nums[i] >= target) {
-                target = i;
+        int n = nums.length;
+        if( n == 1) {
+            return true;
+        }
+        Queue<Integer> q = new LinkedList<>();
+        HashSet<Integer> set = new HashSet<>();
+        q.add(0);
+        set.add(0);
+        while( !q.isEmpty() ) {
+            int idx = q.poll();
+            for(int i = 1; i <= nums[idx]; i++) {
+                int index = i + idx;
+                if( index < n && !set.contains(index)) {
+                    q.add(index);
+                    set.add(index);
+                }
+                if( index >= (n-1)) {
+                    return true;
+                }
             }
         }
-        return (target == 0);
+        return false;
     }
 }
