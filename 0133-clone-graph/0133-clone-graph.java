@@ -29,26 +29,16 @@ class Solution {
         while( !q.isEmpty() ) {
             Node temp = q.poll();
             if( !map.containsKey(temp) ) {
-                Node nd = new Node(temp.val);
-                map.put(temp, nd);
+                Node n = new Node(temp.val);
+                map.put(temp, n);
             }
-            for(Node ne: temp.neighbors) {
-                if( !map.containsKey(ne) ) {
-                    q.add(ne);
-                }
-            }
-        }
-        q.add(node);
-        HashSet<Node> set = new HashSet<>();
-        set.add(node);
-        while( !q.isEmpty() ) {
-            Node temp = q.poll();
-            for(Node ne: temp.neighbors) {
-                map.get(temp).neighbors.add(map.get(ne));
-                if( !set.contains(ne) ) {
-                    q.add(ne);
-                    set.add(ne);
-                }
+            for( Node ne: temp.neighbors ) {
+               if( !map.containsKey(ne) ) {
+                   Node deep = new Node(ne.val);
+                   map.put(ne, deep);
+                   q.add(ne);
+               } 
+               map.get(temp).neighbors.add(map.get(ne));
             }
         }
         return map.get(node);
