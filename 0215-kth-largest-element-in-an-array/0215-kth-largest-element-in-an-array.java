@@ -4,15 +4,11 @@ class Solution {
             public int compare(Integer a, Integer b) {
                 return a-b;
             }
-        } );
-        for(int i = 0; i < nums.length; i++) {
-            if( pq.size() == k) {
-                if(pq.peek() < nums[i]) {
-                    pq.poll();
-                    pq.add(nums[i]);
-                }
-            } else {
-                pq.add(nums[i]);
+        });
+        for(int num: nums) {
+            pq.add(num);
+            if( pq.size() > k) {
+                pq.poll();
             }
         }
         return pq.poll();
