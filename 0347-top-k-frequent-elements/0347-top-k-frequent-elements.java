@@ -3,31 +3,37 @@ class Solution {
         HashMap<Integer, Integer> map = new HashMap<>();
         for(int num: nums) {
             if( !map.containsKey(num) ) {
-                map.put(num, 0);
+                map.put(num,0);
             }
             int count = map.get(num);
             count++;
             map.put(num, count);
         }
-        PriorityQueue<Integer> pq = new PriorityQueue<>( new Comparator<Integer>() {
-            public int compare(Integer a, Integer b) {
-                return (int)(map.get(a) - map.get(b));
+        int n = nums.length;
+        List<Integer>[] bucket = new ArrayList[n+1];
+        for(Map.Entry<Integer, Integer> el: map.entrySet()) {
+            int key = el.getKey();
+            int freq = el.getValue();
+            if(bucket[freq] == null) {
+                bucket[freq] = new ArrayList<>();
             }
-        });
-        for(Map.Entry<Integer, Integer> el: map.entrySet() ) {
-            pq.add(el.getKey());
-            if( pq.size() > k) {
-                pq.poll();
+            bucket[freq].add(key);
+        }
+        List<Integer> ans = new ArrayList<>();
+        int t = k;
+        for(int i = n; i >= 0 && t > 0; i--) {
+            if( bucket[i] != null) {
+                List<Integer> list = bucket[i];
+                for(int j = 0; j < list.size() && t > 0; j++) {
+                    ans.add(list.get(j));
+                    t--;
+                }
             }
         }
-        List<Integer> result = new ArrayList<>();
-        while( !pq.isEmpty() ) {
-            result.add(pq.poll());
+        int[] result = new int[ans.size()];
+        for(int i = 0; i < ans.size(); i++) {
+            result[i] = ans.get(i);
         }
-        int[] ans = new int[result.size()];
-        for(int i = 0 ; i < result.size(); i++) {
-            ans[i] = result.get(i);
-        }
-        return ans;
+        return result;
     }
 }
