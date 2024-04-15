@@ -1,8 +1,3 @@
-// Time Complexity: O(lgn)
-// Space Complexity: O(1)
-
-
-
 /**
  * Definition for a binary tree node.
  * public class TreeNode {
@@ -15,14 +10,16 @@
 
 class Solution {
     public TreeNode lowestCommonAncestor(TreeNode root, TreeNode p, TreeNode q) {
-        while(true) {
-            if(p.val < root.val && q.val < root.val) {
-                root = root.left;
-            } else if( p.val > root.val && q.val > root.val) {
-                root = root.right;
+        TreeNode node = root;
+        while( node != null ) {
+            if( p.val < node.val && q.val < node.val) {
+                node = node.left;
+            } else if( p.val > node.val && q.val > node.val ) {
+                node = node.right;
             } else {
-                return root;
+                return node;
             }
         }
+        return node;
     }
 }
