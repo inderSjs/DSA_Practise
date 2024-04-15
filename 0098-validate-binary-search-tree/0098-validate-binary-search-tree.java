@@ -14,25 +14,23 @@
  * }
  */
 class Solution {
-    List<Integer> list;
-    
     public boolean isValidBST(TreeNode root) {
-        list = new ArrayList<>();
-        traverse(root);
-        for(int i = 1; i < list.size(); i++) {
-            if( list.get(i-1) >= list.get(i)) {
+        Stack<TreeNode> st = new Stack<>();
+        //st.push(root);
+        TreeNode prev = null;
+        while( !st.isEmpty() || root != null) {
+            while( root != null ) {
+                st.push(root);
+                root = root.left;
+            }
+            root = st.pop();
+            if( prev != null && prev.val >= root.val) {
                 return false;
             }
+            prev = root;
+            root = root.right;
         }
         return true;
     }
     
-    public void traverse(TreeNode root) {
-        if( root == null) {
-            return;
-        }
-        traverse(root.left);
-        list.add(root.val);
-        traverse(root.right);
-    }
 }
