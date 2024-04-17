@@ -15,18 +15,31 @@
  */
 class Solution {
     ArrayList<Integer> list;
+    int index;
+    boolean flag;
+    int result;
     public int kthSmallest(TreeNode root, int k) {
         list = new ArrayList<>();
-        inOrder(root);
-        return list.get(k-1);
+        index = 1;
+        flag = true;
+        result = -1;
+        inOrder(root,k);
+        return result;
     }
     
-    public void inOrder(TreeNode root) {
-        if( root == null ) {
-            return;
+    public void inOrder(TreeNode root, int k) {
+        if( flag ) {
+            if( root == null ) {
+                return;
+            }
+            inOrder(root.left,k);
+            list.add(root.val);
+            if( k == index) {
+                result = root.val;
+                flag = false;
+            }
+            index++;
+            inOrder(root.right,k);
         }
-        inOrder(root.left);
-        list.add(root.val);
-        inOrder(root.right);
     }
 }
