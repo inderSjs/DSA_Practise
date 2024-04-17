@@ -14,12 +14,10 @@
  * }
  */
 class Solution {
-    ArrayList<Integer> list;
     int index;
     boolean flag;
     int result;
     public int kthSmallest(TreeNode root, int k) {
-        list = new ArrayList<>();
         index = 1;
         flag = true;
         result = -1;
@@ -33,7 +31,6 @@ class Solution {
                 return;
             }
             inOrder(root.left,k);
-            list.add(root.val);
             if( k == index) {
                 result = root.val;
                 flag = false;
