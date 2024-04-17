@@ -1,6 +1,3 @@
-// Time Complexity: O(n)
-// Space Complexity: O(1)
-
 /**
  * Definition for singly-linked list.
  * class ListNode {
@@ -14,28 +11,14 @@
  */
 public class Solution {
     public ListNode detectCycle(ListNode head) {
-        if( head == null ) {
-            return head;
-        }
-        boolean flag = false;
-        ListNode slow = head;
-        ListNode fast = head;
-        while( fast != null && fast.next != null ) {
-            slow = slow.next;
-            fast = fast.next.next;
-            if( slow == fast ) {
-                flag = true;
-                break;
+        HashSet<ListNode> set = new HashSet<>();
+        while( head != null) {
+            if( set.contains(head) ) {
+                return head;
             }
+            set.add(head);
+            head = head.next;
         }
-        if( !flag ) {
-            return null;
-        }
-        fast = head;
-        while( slow != fast ) {
-            slow = slow.next;
-            fast = fast.next;
-        }
-        return slow;
+        return null;
     }
 }
