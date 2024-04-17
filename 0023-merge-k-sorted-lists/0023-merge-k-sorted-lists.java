@@ -1,6 +1,3 @@
-// Time Complexity: O(Nlogk)
-// Space Complexity: O(k)
-
 /**
  * Definition for singly-linked list.
  * public class ListNode {
@@ -13,22 +10,31 @@
  */
 class Solution {
     public ListNode mergeKLists(ListNode[] lists) {
-        PriorityQueue<ListNode> pq = new PriorityQueue<>( (a,b) -> a.val - b.val);
-        for(ListNode head: lists) {
-            if( head != null ) {
-                pq.add(head);
+        PriorityQueue<ListNode> pq = new PriorityQueue<>( new Comparator<ListNode>() {
+            public int compare(ListNode a, ListNode b) {
+                return a.val - b.val;
+            }
+        });
+        for(ListNode node: lists){
+            if( node != null) {
+                pq.add(node);
             }
         }
-        ListNode dummy = new ListNode();
-        ListNode curr = dummy;
+        ListNode dummy = null;
+        ListNode ret = dummy;
         while( !pq.isEmpty() ) {
-            ListNode min = pq.poll();
-            curr.next = min;
-            curr = curr.next;
-            if( min.next != null ) {
-                pq.add(min.next);
+            ListNode temp = pq.poll();
+            if( temp.next != null ) {
+                pq.add(temp.next);
+            }
+            if( dummy == null ) {
+                dummy = temp;
+                ret = temp;
+            } else {
+                dummy.next = temp;
+                dummy = dummy.next;
             }
         }
-        return dummy.next;
+        return ret;
     }
 }
