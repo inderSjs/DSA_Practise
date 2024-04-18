@@ -1,6 +1,3 @@
-// Time Complexity: O(n)
-// Space complexity: O(1)
-
 /**
  * Definition for singly-linked list.
  * public class ListNode {
@@ -13,16 +10,25 @@
  */
 class Solution {
     public ListNode reverseList(ListNode head) {
-        if( head == null || head.next == null ) {
+        if( head == null || head.next == null) {
             return head;
         }
-        ListNode prev = null;
-        while( head != null ) {
-            ListNode temp = head.next;
-            head.next = prev;
-            prev = head;
-            head = temp;
+        ListNode dummy = new ListNode(-1);
+        dummy.next = head;
+        ListNode prev = dummy;
+        ListNode curr = head;
+        ListNode fast = head.next;
+        while( fast != null) {
+            if( prev == dummy ) {
+                dummy.next = null;
+            }
+            curr.next = prev;
+            prev = curr;
+            curr = fast;
+            fast = fast.next;
         }
-        return prev;
+        curr.next = prev;
+        head.next = null;
+        return curr;
     }
 }
