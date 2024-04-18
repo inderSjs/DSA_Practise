@@ -10,25 +10,21 @@
  */
 class Solution {
     public ListNode reverseList(ListNode head) {
-        if( head == null || head.next == null) {
+        if( head == null || head.next == null ) {
             return head;
         }
-        ListNode dummy = new ListNode(-1);
-        dummy.next = head;
-        ListNode prev = dummy;
-        ListNode curr = head;
-        ListNode fast = head.next;
-        while( fast != null) {
-            if( prev == dummy ) {
-                dummy.next = null;
-            }
-            curr.next = prev;
-            prev = curr;
-            curr = fast;
-            fast = fast.next;
+        return helper(head, null);
+    }
+    
+    private ListNode helper(ListNode curr, ListNode prev) {
+        //base case
+        if( curr == null) {
+            return prev;
         }
+        
+        //logic
+        ListNode temp = curr.next;
         curr.next = prev;
-        head.next = null;
-        return curr;
+        return helper(temp, curr);
     }
 }
