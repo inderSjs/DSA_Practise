@@ -14,20 +14,30 @@ class SparseVector {
 	// Return the dotProduct of two sparse vectors
     public int dotProduct(SparseVector vec) {
         int result = 0;
-        int p = 0;
-        int q = 0;
-        while( p < this.list.size() && q < vec.list.size() ) {
-            if( this.list.get(p)[0] == vec.list.get(q)[0]) {
-                result = result + this.list.get(p)[1]*vec.list.get(q)[1];
-                p++;
-                q++;
-            } else if( this.list.get(p)[0] < vec.list.get(q)[0]) {
-                p++;
-            } else {
-                q++;
-            }
+        int len = vec.list.size();
+        for( int i = 0; i < len; i++ ) {
+            int key = binarySearch(vec.list.get(i)[0], this.list);
+            if( key != -1) {
+                result = result + vec.list.get(i)[1]*this.list.get(key)[1];
+            } 
         }
         return result;
+    }
+    
+    private int binarySearch(int target, List<int []> li) {
+        int low = 0;
+        int high = li.size()-1;
+        while( low <= high ) {
+            int mid = low + (high-low)/2;
+            if( li.get(mid)[0] == target) {
+                return mid;
+            } else if( li.get(mid)[0] < target) {
+                low = mid + 1;
+            } else {
+                high = mid - 1;
+            }
+        }
+        return -1;
     }
 }
 
