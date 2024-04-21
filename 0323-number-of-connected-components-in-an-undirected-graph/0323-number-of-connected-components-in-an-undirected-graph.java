@@ -1,30 +1,40 @@
 class Solution {
-    int[][] graph;
+    HashMap<Integer, List<Integer>> map;
+    boolean[] isVisited;
     
     public int countComponents(int n, int[][] edges) {
-        int result = 0;
-        graph = new int[n][n];
-        for(int i = 0; i < edges.length; i++) {
-            int fv = edges[i][0];
-            int sv = edges[i][1];
-            graph[fv][sv] = 1;
-            graph[sv][fv] = 1;
+        this.map = new HashMap<>();
+        this.isVisited = new boolean[n];
+        for(int[] edge: edges) {
+            int v1 = edge[0];
+            int v2 = edge[1];
+            if( !map.containsKey(v1) ) {
+                map.put(v1, new ArrayList<>());
+            }
+            if( !map.containsKey(v2) ) {
+                map.put(v2, new ArrayList<>());
+            }
+            map.get(v1).add(v2);
+            map.get(v2).add(v1);
         }
-        boolean[] isVisited = new boolean[n];
+        int count = 0;
         for(int i = 0; i < n; i++) {
             if( !isVisited[i] ) {
-                dfs(i, isVisited);
-                result++;
+                dfs(i);
+                count++;
             }
         }
-        return result;
+        return count;
     }
     
-    public void dfs(int vertex, boolean[] isVisited) {
-        isVisited[vertex] = true;
-        for(int i = 0; i < isVisited.length; i++) {
-            if( graph[vertex][i] == 1 && !isVisited[i] ) {
-                dfs(i, isVisited);
+    public void dfs(int node) {
+        isVisited[node] = true;
+        List<Integer> list = map.get(node);
+        if( list != null ) {
+            for(int i = 0; i < list.size(); i++) {
+                if( !isVisited[list.get(i)] ) {
+                    dfs(list.get(i));
+                }
             }
         }
     }
