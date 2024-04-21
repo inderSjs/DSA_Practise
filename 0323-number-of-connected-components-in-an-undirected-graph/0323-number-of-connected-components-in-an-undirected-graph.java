@@ -1,10 +1,7 @@
 class Solution {
-    HashMap<Integer, List<Integer>> map;
-    boolean[] isVisited;
-    
     public int countComponents(int n, int[][] edges) {
-        this.map = new HashMap<>();
-        this.isVisited = new boolean[n];
+        boolean[] isVisited = new boolean[n];
+        HashMap<Integer, List<Integer>> map = new HashMap<>();
         for(int[] edge: edges) {
             int v1 = edge[0];
             int v2 = edge[1];
@@ -17,25 +14,27 @@ class Solution {
             map.get(v1).add(v2);
             map.get(v2).add(v1);
         }
+        Queue<Integer> q = new LinkedList<>();
         int count = 0;
         for(int i = 0; i < n; i++) {
             if( !isVisited[i] ) {
-                dfs(i);
+                q.add(i);
+                while( !q.isEmpty() ) {
+                    int node = q.poll();
+                    isVisited[node] = true;
+                    List<Integer> list = map.get(node);
+                    if( list != null) {
+                        for(int j = 0; j < list.size(); j++) {
+                            int temp = list.get(j);
+                            if( !isVisited[temp] ) {
+                                q.add(temp);
+                            }
+                        }
+                    }
+                }
                 count++;
             }
         }
         return count;
-    }
-    
-    public void dfs(int node) {
-        isVisited[node] = true;
-        List<Integer> list = map.get(node);
-        if( list != null ) {
-            for(int i = 0; i < list.size(); i++) {
-                if( !isVisited[list.get(i)] ) {
-                    dfs(list.get(i));
-                }
-            }
-        }
     }
 }
