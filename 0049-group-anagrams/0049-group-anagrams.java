@@ -3,16 +3,20 @@ class Solution {
         List<List<String>> result = new ArrayList<>();
         HashMap<String, List<String>> map = new HashMap<>();
         for(String str: strs) {
-            char[] temp = str.toCharArray();
-            Arrays.sort(temp);
-            String key = new String(temp);
-            if( !map.containsKey(key) ) {
-                map.put(key, new ArrayList<>());
+            char[] arr = str.toCharArray();
+            Arrays.sort(arr);
+            String temp = String.valueOf(arr);
+            if( !map.containsKey(temp) ) {
+                map.put(temp, new ArrayList<>());
             }
-            map.get(key).add(str);
+            map.get(temp).add(str);
         }
         for(Map.Entry<String, List<String>> el: map.entrySet() ) {
-            result.add(new ArrayList<>(el.getValue()));
+            List<String> li = new ArrayList<>();
+            for(String s: el.getValue() ) {
+                li.add(s);
+            }
+            result.add(li);
         }
         return result;
     }
