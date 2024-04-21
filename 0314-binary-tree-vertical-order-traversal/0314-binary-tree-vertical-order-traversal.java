@@ -15,43 +15,40 @@
  */
 class Solution {
     public List<List<Integer>> verticalOrder(TreeNode root) {
-        List<List<Integer>> result = new ArrayList<>();
+        List<List<Integer>> list = new ArrayList<>();
         if( root == null ) {
-            return result;
+            return list;
         }
-        Queue<TreeNode> q = new LinkedList<>();
-        Queue<Integer> col = new LinkedList<>();
-        int minValue = 0;
-        int maxValue = 0;
+        int min = Integer.MAX_VALUE;
+        int max = Integer.MIN_VALUE;
         HashMap<Integer, List<Integer>> map = new HashMap<>();
-        q.add(root);
-        col.add(0);
-        while( !q.isEmpty() ) {
-            TreeNode node = q.remove();
-            int idx = col.remove();
-            if( !map.containsKey(idx) ) {
-                map.put(idx, new ArrayList<>());
+        Queue<TreeNode> q1 = new LinkedList<>();
+        Queue<Integer> q2 = new LinkedList<>();
+        q1.add(root);
+        q2.add(0);
+        while( !q1.isEmpty() ) {
+            TreeNode node = q1.poll();
+            int col = q2.poll();
+            if( !map.containsKey(col) ) {
+                map.put(col, new ArrayList<>());
             }
-            map.get(idx).add(node.val);
+            map.get(col).add(node.val);
+            min = Math.min(min, col);
+            max = Math.max(max, col);
             if( node.left != null) {
-                q.add(node.left);
-                int left = idx -1;
-                minValue = Math.min(minValue, left);
-                col.add(left);
+                q1.add(node.left);
+                q2.add(col-1);
             }
             if( node.right != null) {
-                q.add(node.right);
-                int right = idx + 1;
-                maxValue = Math.max(maxValue, right);
-                col.add(right);
+                q1.add(node.right);
+                q2.add(col+1);
             }
         }
-        for(int i = minValue; i <= maxValue; i++) {
+        for(int i = min; i <= max; i++) {
             if( map.containsKey(i) ) {
-                List<Integer> li = map.get(i);
-                result.add(li);
+                list.add(map.get(i));
             }
         }
-        return result;
+        return list;
     }
 }
