@@ -14,7 +14,7 @@ class Solution {
         while( node != null ) {
             if( p.val < node.val && q.val < node.val) {
                 node = node.left;
-            } else if( p.val > node.val && q.val > node.val ) {
+            } else if( p.val > node.val && q.val > node.val) {
                 node = node.right;
             } else {
                 return node;
