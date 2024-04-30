@@ -4,13 +4,13 @@ class Solution {
         int[] indegree = new int[numCourses];
         HashMap<Integer, List<Integer>> map = new HashMap<>();
         for(int[] edge: prerequisites) {
-            int in = edge[1];
-            int out = edge[0];
-            indegree[in]++;
-            if( !map.containsKey(out) ) {
-                map.put(out, new ArrayList<>());
+            int out = edge[1];
+            int in = edge[0];
+            indegree[out]++;
+            if( !map.containsKey(in) ) {
+                map.put(in, new ArrayList<>());
             }
-            map.get(out).add(in);
+            map.get(in).add(out);
         }
         int count = 0;
         Queue<Integer> q = new LinkedList<>();
