@@ -21,7 +21,12 @@ class MyHashSet {
         int pIdx = hash1(key);
         int nIdx = hash2(key);
         if( storage[pIdx] == null) {
-            storage[pIdx] = new boolean[bucketItem+1];
+            if( pIdx == 0 ) {
+                storage[pIdx] = new boolean[bucketItem+1];
+            } else {
+                storage[pIdx] = new boolean[bucketItem];
+            }
+            
         }
         storage[pIdx][nIdx] = true;
     }
