@@ -10,25 +10,18 @@ class MinStack {
     }
     
     public void push(int val) {
-        if( st.isEmpty() ) {
-            st.push(val);
-            minSt.push(val);
-            min = val;
-        } else {
-            st.push(val);
-            min = Math.min(min, st.peek());
+        if( min >= val) {
             minSt.push(min);
-        }
+            min = val;
+        } 
+        st.push(val);
     }
     
     public void pop() {
-        st.pop();
-        minSt.pop();
-        if( !minSt.isEmpty()) {
-            min = minSt.peek();
-        } else {
-            min = Integer.MAX_VALUE;
+        if( min == st.peek() ) {
+            min = minSt.pop();
         }
+        st.pop();
     }
     
     public int top() {
