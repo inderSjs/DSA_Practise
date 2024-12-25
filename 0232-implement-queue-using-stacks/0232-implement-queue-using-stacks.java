@@ -1,50 +1,40 @@
-// Time Complexity : Push, peek, empty -> O(1), pop -> O(1) ammortized
-// Space Complexity : O(n)
-// Did this code successfully run on Leetcode : Yes
-// Any problem you faced while coding this : I had to go through solutions to understand the approach
-
-
-// Your code here along with comments explaining your approach
-
-
-
-
 class MyQueue {
-    private Stack<Integer> mainStack;
-    private Stack<Integer> auxStack;
-    private int front;
+    private Stack<Integer> st;
+    private Stack<Integer> helper;
 
     public MyQueue() {
-        mainStack = new Stack<Integer>();
-        auxStack = new Stack<Integer>();
+        this.st = new Stack<>();
+        this.helper = new Stack<>();
     }
     
     public void push(int x) {
-        if( mainStack.isEmpty() ) {
-            front = x;
-        }
-        mainStack.push(x);
+        st.push(x);
     }
     
     public int pop() {
-        if( auxStack.isEmpty() ) {
-            while( !mainStack.isEmpty() ) {
-                auxStack.push(mainStack.pop());
-            }
+        while( !st.isEmpty() ) {
+            helper.push(st.pop());
         }
-        return auxStack.pop();
+        int ans = helper.pop();
+        while( !helper.isEmpty() ) {
+            st.push(helper.pop());
+        }
+        return ans;
     }
     
     public int peek() {
-        if( auxStack.isEmpty() ) {
-            return front;
-        } else {
-            return auxStack.peek();
+        while( !st.isEmpty() ) {
+            helper.push(st.pop());
         }
+        int ans = helper.peek();
+        while( !helper.isEmpty() ) {
+            st.push(helper.pop());
+        }
+        return ans;
     }
     
     public boolean empty() {
-        return mainStack.isEmpty() && auxStack.isEmpty();
+        return st.isEmpty();
     }
 }
 
