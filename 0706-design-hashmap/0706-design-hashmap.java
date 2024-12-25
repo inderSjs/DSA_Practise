@@ -1,92 +1,51 @@
-
-
-
-class Node {
-    int key;
-    int value;
-    Node next;
-    
-    public Node ( int key, int value ) {
-        this.key = key;
-        this.value = value;
-    }
-}
-
-
 class MyHashMap {
-    private Node[] map;
+    private int[][] storage;
+    private int bucket;
+    private int bucketItem;
 
     public MyHashMap() {
-        map = new Node[1000];
+        this.storage = new int[1000][];
+        this.bucket = 1000;
+        this.bucketItem = 1000;
     }
     
-    private int hash( int key ) {
-        return key % 1000;
+    private int hash1(int key) {
+        return key%1000;
+    }
+    
+    private int hash2(int key) {
+        return key/1000;
     }
     
     public void put(int key, int value) {
-        int hsh = hash(key);
-        Node temp = map[hsh];
-        Node node = new Node( key, value );
-        if( temp == null ) {
-            map[hsh] = node;
-        } else {
-            Node curr = map[hsh];
-            Node t1 = map[hsh];
-            while( curr != null ) {
-                if( curr.key == key ) {
-                    curr.value = value;
-                    return;
-                }
-                t1 = curr;
-                curr = curr.next;
-            }
-            t1.next = node;
+        int pIdx = hash1(key);
+        int nIdx = hash2(key);
+        if( storage[pIdx] == null) {
+            storage[pIdx] = new int[bucketItem+1];
+            Arrays.fill(storage[pIdx], -1);
         }
+        storage[pIdx][nIdx] = value;
     }
     
     public int get(int key) {
-        int hsh = hash(key);
-        Node curr = map[hsh];
-        while( curr != null ) {
-            if( curr.key == key ) {
-                return curr.value;
-            }
-            curr = curr.next;
+        int pIdx = hash1(key);
+        int nIdx = hash2(key);
+        if( storage[pIdx] == null) {
+            return -1;
         }
-        return -1;
+        return storage[pIdx][nIdx];
     }
     
     public void remove(int key) {
-        int hsh = hash(key);
-        Node temp = map[hsh];
-        if( temp == null ) return;
-        if( temp.key == key ) {
-            map[hsh] = temp.next;
-            temp.next = null;
+        int pIdx = hash1(key);
+        int nIdx = hash2(key);
+        if( storage[pIdx] == null) {
             return;
         }
-        Node curr = map[hsh].next;
-        while( curr != null ) {
-            if( curr.key == key ) {
-                temp.next = curr.next;
-                curr.next = null;
-                return;
-            }
-            temp = curr;
-            curr = curr.next;
-            //temp = temp.next;
-        }
+        storage[pIdx][nIdx] = -1;
     }
 }
 
-/**
- * Your MyHashMap object will be instantiated and called as such:
- * MyHashMap obj = new MyHashMap();
- * obj.put(key,value);
- * int param_2 = obj.get(key);
- * obj.remove(key);
- */
 /**
  * Your MyHashMap object will be instantiated and called as such:
  * MyHashMap obj = new MyHashMap();
